@@ -2,6 +2,11 @@ from rest_framework import serializers
 
 from .models import Person, ModelManager
 
+class CourseSerializer(serializers.Serializer):
+    id = serializers.IntegerField(required=False, read_only=True)
+    name = serializers.CharField(max_length=50,required=True)
+    code = serializers.CharField(max_length=50,required=True)
+
 class PersonSerializer(serializers.Serializer):
     id = serializers.IntegerField(required=False, read_only=True)
     name = serializers.CharField(max_length=50,required=True)
@@ -17,3 +22,6 @@ class PersonSerializer(serializers.Serializer):
     def update(self, pk, validated_data):
         obj = ModelManager(Person).update(pk, validated_data)
         return obj
+
+
+

@@ -2,8 +2,10 @@ from rest_framework import viewsets
 from rest_framework import status
 from rest_framework.response import Response
 
-from .serializers import PersonSerializer
-from .models import Person, ModelManager
+from .serializers import PersonSerializer, CourseSerializer
+from .models import Person, Course, PersonCourseManager, ModelManager
+from rest_framework.decorators import api_view
+
 class PersonViewSet(viewsets.ViewSet):
     # Required for the Browsable API renderer to have a nice form.
     serializer_class = PersonSerializer
@@ -23,7 +25,7 @@ class PersonViewSet(viewsets.ViewSet):
             instance=queryset,
             many=True)
         count = self.manager.count()
-        return Response({'total':count, 'data':serializer.data})
+        return Response({'total': count, 'data': serializer.data})
 
     def retrieve(self, request, pk=None):
         if pk:
@@ -42,6 +44,33 @@ class PersonViewSet(viewsets.ViewSet):
         serializer.is_valid(raise_exception=True)
         serializer.update(pk, serializer.validated_data)
         return Response(serializer.data)
+
+@api_view(['GET', 'POST'])
+def person_courses(request, pk):
+
+    manager = PersonCourseManager()
+
+    if request.method == 'POST':
+        #{"action":"subscribe", "id":id}
+        #{'action':'unsubscribe', 'id':id}
+        action = request.data.get('action')
+        if action == 'subscribe':
+            manager.subscribe(pk, request.data['id'])
+            
+        elif action == 'unsubscribe':
+            manager.unsubscribe(pk, request.data['id'])
+
+    serializer_available = CourseSerializer(
+        instance=manager.courses_available(pk),
+        many=True)
+    serializer_applied = CourseSerializer(
+        instance=manager.courses_applied(pk),
+        many=True)
+
+    return Response({'applied':serializer_applied.data,
+                     'available':serializer_available.data})
+
+    
 
 
 

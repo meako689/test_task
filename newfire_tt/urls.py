@@ -23,6 +23,7 @@ router = DefaultRouter()
 router.register(r'people', views.PersonViewSet, base_name='people')
 
 urlpatterns = [
+    url(r'^courses/(?P<pk>[0-9]+)$', views.person_courses),
     url(r'^', include(router.urls)),
     url(r'^admin/', admin.site.urls),
 ]

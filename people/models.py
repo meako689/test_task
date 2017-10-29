@@ -9,6 +9,11 @@ class Model(object):
     def save():
         pass
 
+    def __init__(self, **fields):
+        self.objects = ModelManager(self)
+        for field, value in fields.items():
+            setattr(self, field, value)
+
 class Person(Model):
     _table = 'person'
     name = ''
@@ -18,17 +23,54 @@ class Person(Model):
     mobile_phone = ''
     courses = []
 
-    def __init__(self, **fields):
-        self.objects = ModelManager(self)
-        for field, value in fields.items():
-            setattr(self, field, value)
 
     def __repr__(self):
         return "Person: "+self.name
 
+
 class Course(Model):
-    _table = 'Courses'
+    _table = 'courses'
     name = ''
+    code = ''
+
+    def __repr__(self):
+        return "Course: "+self.name
+
+class PersonCourseManager(object):
+    def __init__(self):
+        self.conn = psycopg2.connect("dbname='{dbname}' user='{dbuser}' host='localhost' password='{dbpass}'".format(
+                                dbname=settings.DATABASES['default']['NAME'],
+                                dbuser=settings.DATABASES['default']['USER'],
+                                dbpass=settings.DATABASES['default']['PASSWORD']))
+        self.cur = self.conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+
+    def courses_applied(self, pk):
+        self.cur.execute("""SELECT DISTINCT {table}.id, {table}.name, {table}.code FROM {table}
+                                left outer join person_courses 
+                                on {table}.id = person_courses.course_id 
+                                where person_courses.person_id = {person_pk}""".format(
+                                    table=Course._table, person_pk=pk)
+                )
+        return self.cur.fetchall()
+
+    def courses_available(self, pk):
+        self.cur.execute("""SELECT {table}.id, {table}.name, {table}.code FROM {table}
+                                where {table}.id not in (
+                                select {table}.id from {table}
+                                left outer join person_courses 
+                                on {table}.id = person_courses.course_id 
+                                where person_courses.person_id = {person_pk})""".format(
+                                    table=Course._table, person_pk=pk)
+                )
+        return self.cur.fetchall()
+
+    def unsubscribe(self, pk, course_pk):
+        self.cur.execute('DELETE FROM person_courses WHERE person_id = {pk} AND course_id = {course_pk}'.format(pk=pk, course_pk=course_pk))
+        self.conn.commit()
+
+    def subscribe(self, pk, course_pk):
+        self.cur.execute('INSERT INTO person_courses (person_id, course_id) values ({pk},{course_pk})'.format(pk=pk, course_pk=course_pk))
+        self.conn.commit()
 
 class ModelManager(object):
 
@@ -85,9 +127,3 @@ class ModelManager(object):
         row = self.cur.fetchone()
         self.conn.commit()
         return self.get(row['id'])
-
-    
-
-REST_FRAMEWORK = {
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination'
-}
