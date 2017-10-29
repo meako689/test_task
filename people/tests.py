@@ -8,4 +8,6 @@ from people.models import Person
 pm = Person()
 res = pm.create({'name':'black'+id_generator(),'email':'ia@i.a'+id_generator(),'status':'True','phone':'15','mobile_phone':'16'})
 # import ipdb; ipdb.set_trace()
-print(res)
+item = pm.get(res)
+print("RESULT")
+print(item )
