@@ -1,6 +1,7 @@
 venv
-*.pyc
-staticfiles
+__pycache__/
+*.py[cod]
+*$py.class
 
 # Django stuff:
 *.log
