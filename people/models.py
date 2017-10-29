@@ -19,11 +19,12 @@ class Person(Model):
     courses = []
 
     def __init__(self, **fields):
+        self.objects = ModelManager(self)
         for field, value in fields.items():
             setattr(self, field, value)
 
-    def __str__(self):
-        return self.name
+    def __repr__(self):
+        return "Person: "+self.name
 
 class Course(Model):
     _table = 'Courses'
@@ -47,13 +48,13 @@ class ModelManager(object):
             values=", ".join(["'{}'".format(f) for f in fields.values()])
             )
         self.cur.execute(query)
-        res = self.cur.fetchone()[0]
+        row = self.cur.fetchone()
         self.conn.commit()
-        return res
+        return self.get(row['id'])
 
     def get(self, id):
         self.cur.execute("""SELECT * FROM {table} WHERE id = {id}""".format(table=self.model._table, id=id))
-        return self.cur.fetchall()[0]
+        return self.model(**self.cur.fetchall()[0])
 
     def list(self, limit=None, offset=None):
         query = """SELECT * FROM {table}""".format(table=self.model._table)
@@ -62,21 +63,31 @@ class ModelManager(object):
         if offset:
             query += " OFFSET {offset}".format(offset=offset)
         self.cur.execute(query)
-        return self.cur.fetchall()
+        return [self.model(**itm) for itm in self.cur.fetchall()]
 
-    def search(self, field, name):
-        self.cur.execute("""SELECT * FROM {table} WHERE LIKE (LOWER({field}) ,LOWER('%{name}%'))""".format(table=self.model._table, field=field, name=name))
-        return self.cur.fetchall()
+    def count(self):
+        query = """SELECT COUNT(*) FROM {table}""".format(table=self.model._table)
+        self.cur.execute(query)
+        return self.cur.fetchone()['count']
 
 
+    def search(self, field, query):
+        self.cur.execute("""SELECT * FROM {table} WHERE LIKE (LOWER({field}), LOWER('%{query}%'))""".format(table=self.model._table, field=field, query=query))
+        return [self.model(**itm) for itm in self.cur.fetchall()]
 
     def update(self, id, fields):
-        self.cur.execute("""UPDATE {table} SET ({keys}) = ({values}) WHERE id = {id} """.format(table=self.model._table, 
+        self.cur.execute("""UPDATE {table} SET ({keys}) = ({values}) WHERE id = {id} RETURNING id """.format(table=self.model._table, 
             id=id, 
             keys=", ".join(fields.keys()),
             values=", ".join(["'{}'".format(f) for f in fields.values()])
         ))
 
+        row = self.cur.fetchone()
+        self.conn.commit()
+        return self.get(row['id'])
+
     
 
-
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination'
+}
