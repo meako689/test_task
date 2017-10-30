@@ -1,6 +1,10 @@
 import psycopg2
 from django.conf import settings
 
+CONNECTION = psycopg2.connect("dbname='{dbname}' user='{dbuser}' host='localhost' password='{dbpass}'".format(
+                        dbname=settings.DATABASES['default']['NAME'],
+                        dbuser=settings.DATABASES['default']['USER'],
+                        dbpass=settings.DATABASES['default']['PASSWORD']))
 
 class Model(object):
     """Base class for db instances"""
@@ -49,10 +53,7 @@ class ModelManager(object):
 
     def __init__(self, model):
         self.model = model
-        self.conn = psycopg2.connect("dbname='{dbname}' user='{dbuser}' host='localhost' password='{dbpass}'".format(
-                        dbname=settings.DATABASES['default']['NAME'],
-                        dbuser=settings.DATABASES['default']['USER'],
-                        dbpass=settings.DATABASES['default']['PASSWORD']))
+        self.conn = CONNECTION
         self.cur = self.conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
 
     def create(self, fields):
