@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Person, ModelManager
+from .models import Person, ModelManager, StoredModelManager
 
 class CourseSerializer(serializers.Serializer):
     id = serializers.IntegerField(required=False, read_only=True)
@@ -16,12 +16,15 @@ class PersonSerializer(serializers.Serializer):
     mobile_phone = serializers.CharField(max_length=13)
 
     def create(self, validated_data):
-        obj = ModelManager(Person).create(validated_data)
+        obj = StoredModelManager(Person).create(validated_data)
         return obj
 
     def update(self, pk, validated_data):
-        obj = ModelManager(Person).update(pk, validated_data)
+        obj = StoredModelManager(Person).update(pk, validated_data)
         return obj
+
+    def delete(self, pk):
+        StoredModelManager(Person).delete(pk)
 
 
 

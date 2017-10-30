@@ -21,9 +21,10 @@ from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()
 router.register(r'people', views.PersonViewSet, base_name='people')
+router.register(r'courses', views.CoursesViewSet, base_name='courses')
 
 urlpatterns = [
-    url(r'^courses/(?P<pk>[0-9]+)$', views.person_courses),
+    url(r'^person_courses/(?P<pk>[0-9]+)$', views.person_courses),
     url(r'^', include(router.urls)),
     url(r'^admin/', admin.site.urls),
 ]
