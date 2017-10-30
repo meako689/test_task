@@ -114,9 +114,9 @@ class StoredModelManager(ModelManager):
         query = """select * FROM create_person('{name}','{email}','{status}','{phone}','{mobile_phone}')""".format(
             name=fields.get('name'),
             email=fields.get('email'),
-            status=fields.get('status'),
-            phone=fields.get('phone'),
-            mobile_phone=fields.get('mobile_phone')
+            status=fields.get('status', False),
+            phone=fields.get('phone', ''),
+            mobile_phone=fields.get('mobile_phone', '')
         )
         self.cur.execute(query)
         row = self.cur.fetchone()

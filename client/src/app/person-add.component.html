@@ -1,0 +1,17 @@
+<h2>Let'S Create  !</h2>
+     <form [formGroup]="newPersonForm" #form="ngForm" (ngSubmit)="add(newPersonForm.value)">
+                    <input matInput type="text"
+                           placeholder="name"
+                           formControlName="name">
+
+                    <input matInput type="text"
+                           placeholder="email"
+                           formControlName="email">
+
+                <button type="submit" [disabled]="!newPersonForm.valid">
+                    create
+                </button>
+
+            </form>
+<button (click)="goBack()">Back</button>
+

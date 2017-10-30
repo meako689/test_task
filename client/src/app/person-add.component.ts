@@ -1,35 +1,41 @@
 import { Component, Input } from '@angular/core';
 import { OnInit } from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Location }                 from '@angular/common';
 import { Person } from './person';
 import { PersonService } from './person.service';
+
 import 'rxjs/add/operator/switchMap';
 
 @Component({
-  selector: 'person-detail',
-  templateUrl: './person-detail.component.html',
+  selector: 'person-add',
+  templateUrl: './person-add.component.html',
 })
-export class PersonDetailComponent implements OnInit {
-    @Input() person: Person;
-
+export class PersonAddComponent {
+    newPersonForm: FormGroup;
 
     constructor(
       private personService: PersonService,
       private route: ActivatedRoute,
-      private location: Location
-    ) {}
-
-    ngOnInit(): void {
-      this.route.paramMap
-        .switchMap((params: ParamMap) => this.personService.getPerson(+params.get('id')))
-        .subscribe(person => this.person = person);
+      private location: Location,
+      private formBuilder: FormBuilder
+      
+    ) {
+    this.newPersonForm = this.formBuilder.group({
+      'name': ['', [Validators.required]],
+      'email': ['', [Validators.required]]
+    });
+       console.log('HELLO THERE');
     }
+
     goBack(): void {
       this.location.back();
     }
-    save(): void {
-      this.personService.update(this.person)
+
+    add(newPerson: Person): void {
+        console.log(newPerson);
+      this.personService.create(newPerson)
         .then(() => this.goBack()); //TODO show message, wait 3 sec
     }
 }
