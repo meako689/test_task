@@ -46,6 +46,14 @@ export class PersonService {
         .catch(this.handleError);
     }
 
+    delete(person: Person): Promise<void> {
+      const url = `${this.peopleUrl}${person.id}/`;
+      return this.http.delete(url, {headers: this.headers})
+        .toPromise()
+        .then(() => null)
+        .catch(this.handleError);
+    }
+
     private handleError(error: any): Promise<any> {
       console.error('An error occurred', error); // for demo purposes only
       return Promise.reject(error.message || error);

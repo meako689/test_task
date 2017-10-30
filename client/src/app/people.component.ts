@@ -36,4 +36,12 @@ export class PeopleComponent implements OnInit {
         this.selectedPerson = person;
         this.router.navigate(['/person', person.id]);
     }
+
+    delete(person: Person): void {
+      this.personService
+          .delete(person)
+          .then(() => {
+            this.people = this.people.filter(p => p !== person);
+          });
+    }
 }
