@@ -1,12 +1,18 @@
 from rest_framework import viewsets
 from rest_framework import status
 from rest_framework.response import Response
-
-from .serializers import PersonSerializer, CourseSerializer
-from .models import Person, Course, PersonCourseManager, ModelManager, StoredModelManager
 from rest_framework.decorators import api_view
 
+from .serializers import PersonSerializer, CourseSerializer
+from .models import (Person,
+                     Course,
+                     PersonCourseManager,
+                     ModelManager,
+                     StoredModelManager)
+
+
 class CoursesViewSet(viewsets.ViewSet):
+    """Viewset for browsing Courses"""
     # Required for the Browsable API renderer to have a nice form.
     serializer_class = CourseSerializer
     manager = ModelManager(Course)
@@ -19,8 +25,9 @@ class CoursesViewSet(viewsets.ViewSet):
         count = self.manager.count()
         return Response({'total': count, 'data': serializer.data})
 
+
 class PersonViewSet(viewsets.ViewSet):
-    # Required for the Browsable API renderer to have a nice form.
+    """Viewset for browsing and CRUD'ing people """
     serializer_class = PersonSerializer
     manager = StoredModelManager(Person)
 
@@ -66,16 +73,21 @@ class PersonViewSet(viewsets.ViewSet):
 
 @api_view(['GET', 'POST'])
 def person_courses(request, pk):
+    """View for manipulating M2M relations
+    Allows to see available and subscribed courses for given person.
+
+    Also you can subscribe or unsubscribe for a course using POST request:
+
+        {"action":"subscribe", "id":id}
+        {'action':'unsubscribe', 'id':id}
+    """
 
     manager = PersonCourseManager()
 
     if request.method == 'POST':
-        #{"action":"subscribe", "id":id}
-        #{'action':'unsubscribe', 'id':id}
         action = request.data.get('action')
         if action == 'subscribe':
             manager.subscribe(pk, request.data['id'])
-            
         elif action == 'unsubscribe':
             manager.unsubscribe(pk, request.data['id'])
 
@@ -88,8 +100,3 @@ def person_courses(request, pk):
 
     return Response({'applied': serializer_applied.data,
                      'available': serializer_available.data})
-
-    
-
-
-
