@@ -1,0 +1,4 @@
+
+<ul>
+  <li *ngFor='let person of people'><a [routerLink]="['/person', person.id]">{{person.name}}</a></li>
+</ul>
