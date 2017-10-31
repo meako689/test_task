@@ -21,6 +21,13 @@ export class PersonService {
                  .catch(this.handleError);
     }
 
+    searchPeople(value: string): Promise<Person[]> {
+        return this.http.get(this.peopleUrl+'?name='+value)
+                 .toPromise()
+                 .then(response => response.json().data as Person[])
+                 .catch(this.handleError);
+    }
+
     getPerson(id: number): Promise<Person> {
         const url = `${this.peopleUrl}${id}/`;
         return this.http.get(url)

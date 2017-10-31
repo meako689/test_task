@@ -36,6 +36,10 @@ export class PeopleComponent implements OnInit {
         this.selectedPerson = person;
         this.router.navigate(['/person', person.id]);
     }
+    onSearch(value: string): void{
+        this.personService.searchPeople(value).then(
+            people => this.people = people);
+    }
 
     delete(person: Person): void {
       this.personService
