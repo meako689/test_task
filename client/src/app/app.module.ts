@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpModule }    from '@angular/http';
 
 
@@ -10,6 +10,7 @@ import { PersonAddComponent } from './person-add.component';
 import { PeopleComponent } from './people.component';
 import { AppRoutingModule } from './app.routing';
 import { PersonService } from './person.service';
+import { PersonCourseService } from './person-course.service';
 import { ActiveBlockedPipe } from './active-blocked.pipe';
 
 
@@ -29,7 +30,7 @@ import { ActiveBlockedPipe } from './active-blocked.pipe';
     HttpModule,
     AppRoutingModule
   ],
-  providers: [PersonService],
+  providers: [PersonService, PersonCourseService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

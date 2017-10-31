@@ -30,6 +30,15 @@ export class PeopleComponent implements OnInit {
         this.showPerPage = this.showPerPageOptions[0];
     }
 
+    ngOnInit(): void {
+      this.getPeople();
+      this.getTotal();
+       console.log('init');
+    }
+
+
+
+
     getPeople(): void {
         this.personService.getPeople(this.showPerPage, this.currentPage).then((people) => {
             this.people = people;
@@ -74,12 +83,6 @@ export class PeopleComponent implements OnInit {
         console.log(this.pages);
     }
 
-
-    ngOnInit(): void {
-      this.getPeople();
-      this.getTotal();
-       console.log('init');
-    }
 
     onSelect(person: Person): void {
         this.selectedPerson = person;

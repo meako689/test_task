@@ -15,6 +15,28 @@
         <input [(ngModel)]="person.mobile_phone" placeholder="mobile_phone"/>
       </div>
 
+      <hr />
+      <div *ngIf="courses" >
+        <div *ngIf="courses.available.length" >
+          
+        course to add:
+        <select [(ngModel)]="courseToAdd">
+          <option *ngFor="let course of courses.available" [ngValue]="course">{{course.name}}</option>
+        </select>
+            <button class="add"
+              (click)="subscribe(courseToAdd); $event.stopPropagation()">add</button>
+        </div>
+
+        <ul *ngIf="courses.applied.length" >
+          <li *ngFor="let course of courses.applied">{{course.name}}
+            <button class="delete"
+              (click)="unsubscribe(course); $event.stopPropagation()">x</button>
+          
+          </li>
+        </ul>
+      </div>
+
+      <hr />
 <button (click)="goBack()">Back</button>
 <button (click)="save()">Save</button>
 
