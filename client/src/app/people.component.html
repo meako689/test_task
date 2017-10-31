@@ -1,8 +1,12 @@
 
-
+<h2> Total people {{total}}</h2>
   <input #searchBox id="search-box" (keyup.enter)="onSearch(searchBox.value)"  />
   <button class="search"
-    (click)="onSearch(searchBox.value); ">x</button>
+    (click)="onSearch(searchBox.value); ">search</button>
+
+<select (change)="changePerPage()"[(ngModel)]="showPerPage">
+  <option *ngFor="let c of showPerPageOptions" [ngValue]="c">{{c}}</option>
+</select>
 
 <ul>
   <li *ngFor='let person of people'><a [routerLink]="['/person', person.id]">{{person.name}}</a>
@@ -10,3 +14,11 @@
     (click)="delete(person); $event.stopPropagation()">x</button>
   </li>
 </ul>
+pages:
+<button (click)="goToPage(currentPage-1)" [disabled]="currentPage === pages[0]">
+  prev</button>
+<button (click)="goToPage(page)"  [class.selected]="page === currentPage" *ngFor='let page of pages'>
+  {{page}}</button>
+<button (click)="goToPage(currentPage+1)" [disabled]="currentPage === pages[pages.length-1]">
+  next</button>
+

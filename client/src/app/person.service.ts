@@ -14,11 +14,27 @@ export class PersonService {
     private headers = new Headers({'Content-Type': 'application/json'});
     constructor(private http: Http) { }
 
-    getPeople(): Promise<Person[]> {
-      return this.http.get(this.peopleUrl)
+    getPeople(limit:number, page:number): Promise<Person[]> {
+        var url = this.peopleUrl;
+        if (limit > 0) {
+            url += '?limit='+limit
+            if (page > 0){
+                const offset = (page-1)*limit;
+                url += '&offset='+offset
+            }
+        }
+      return this.http.get(url)
                  .toPromise()
                  .then(response => response.json().data as Person[])
                  .catch(this.handleError);
+    }
+
+    getTotal(): Promise<number>{
+        return this.http.get(this.peopleUrl+'count/')
+                 .toPromise()
+                 .then(response => response.json().total)
+                 .catch(this.handleError);
+
     }
 
     searchPeople(value: string): Promise<Person[]> {

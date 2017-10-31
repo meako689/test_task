@@ -1,7 +1,9 @@
 from rest_framework import viewsets
 from rest_framework import status
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
+from rest_framework.decorators import (api_view,
+                                       detail_route,
+                                       list_route)
 
 from .serializers import PersonSerializer, CourseSerializer
 from .models import (Person,
@@ -44,8 +46,13 @@ class PersonViewSet(viewsets.ViewSet):
         serializer = self.serializer_class(
             instance=queryset,
             many=True)
+        return Response({'data': serializer.data})
+
+    @list_route()
+    def count(self, request):
+        """Get total number of items for pagination"""
         count = self.manager.count()
-        return Response({'total': count, 'data': serializer.data})
+        return Response({'total': count})
 
     def retrieve(self, request, pk=None):
         if pk:
