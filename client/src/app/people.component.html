@@ -10,11 +10,16 @@
 
 <ul>
   <li *ngFor='let person of people'><a [routerLink]="['/person', person.id]">{{person.name}}</a>
+    | {{person.email}}
+    | {{person.status | activeBlocked}}
   <button class="delete"
     (click)="delete(person); $event.stopPropagation()">x</button>
   </li>
 </ul>
 pages:
+
+
+
 <button (click)="goToPage(currentPage-1)" [disabled]="currentPage === pages[0]">
   prev</button>
 <button (click)="goToPage(page)"  [class.selected]="page === currentPage" *ngFor='let page of pages'>

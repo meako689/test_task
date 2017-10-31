@@ -3,8 +3,16 @@
       <div><label>id: </label>{{person.id}}</div>
       <div>
         <label>name: </label>
-        <input [(ngModel)]="person.name" placeholder="name"/>
-        <input [(ngModel)]="person.email" placeholder="email"/>
+        <input id="name" name="name" [(ngModel)]="person.name" placeholder="name"/>
+        <input type="email" [(ngModel)]="person.email" placeholder="email"/>
+
+        <select [(ngModel)]="person.status">
+          <option [ngValue]=true>active</option>
+          <option [ngValue]=false>inactive</option>
+        </select>
+
+        <input [(ngModel)]="person.phone" placeholder="phone"/>
+        <input [(ngModel)]="person.mobile_phone" placeholder="mobile_phone"/>
       </div>
 
 <button (click)="goBack()">Back</button>

@@ -5,13 +5,13 @@ import { Person } from './person';
 import { PersonService } from './person.service';
 
 
-
 @Component({
   selector: 'people-list',
   templateUrl: './people.component.html',
     styleUrls: ['./people.component.css'],
     providers: [PersonService]
 })
+
 
 export class PeopleComponent implements OnInit {
 
@@ -21,7 +21,7 @@ export class PeopleComponent implements OnInit {
   total = 0;
   pages: number [] = [];
   currentPage :number = 1;
-  showPerPageOptions = [2, 4, 6];
+  showPerPageOptions = [15, 10, 20];
   showPerPage :number;
 
     constructor(private personService: PersonService,
@@ -78,6 +78,7 @@ export class PeopleComponent implements OnInit {
     ngOnInit(): void {
       this.getPeople();
       this.getTotal();
+       console.log('init');
     }
 
     onSelect(person: Person): void {

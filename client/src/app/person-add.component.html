@@ -1,12 +1,69 @@
-<h2>Let'S Create  !</h2>
+<h2>Fuck</h2>
      <form [formGroup]="newPersonForm" #form="ngForm" (ngSubmit)="add(newPersonForm.value)">
-                    <input matInput type="text"
+                    <input type="text"
                            placeholder="name"
-                           formControlName="name">
+                           formControlName="name"/>
 
-                    <input matInput type="text"
+
+
+<div *ngIf="newPersonForm.controls.name.invalid && (newPersonForm.controls.name.dirty || newPersonForm.controls.name.touched)"
+     class="alert alert-danger">
+errors:
+  <div *ngIf="newPersonForm.controls.name.errors.required">
+    Name is required.
+  </div>
+
+</div>
+
+                    <input type="email"
                            placeholder="email"
                            formControlName="email">
+
+<div *ngIf="newPersonForm.controls.email.invalid && (newPersonForm.controls.email.dirty || newPersonForm.controls.email.touched)"
+     class="alert alert-danger">
+errors:
+  <div *ngIf="newPersonForm.controls.email.errors.email">
+    must be email
+  </div>
+
+</div>
+
+
+                    <select formControlName="status">
+                      <option [ngValue]=true>active</option>
+                      <option [ngValue]=false>inactive</option>
+                    </select>
+                    <input type="text"
+                           placeholder="phone"
+                           formControlName="phone"/>
+
+
+<div *ngIf="newPersonForm.controls.phone.invalid && (newPersonForm.controls.phone.dirty || newPersonForm.controls.phone.touched)"
+     class="alert alert-danger">
+errors:
+  <div *ngIf="newPersonForm.controls.phone.errors.pattern">
+    must be phone
+  </div>
+
+</div>
+
+
+                    <input type="text"
+                           placeholder="mobile_phone"
+                           formControlName="mobile_phone"/>
+
+
+<div *ngIf="newPersonForm.controls.mobile_phone.invalid && (newPersonForm.controls.mobile_phone.dirty || newPersonForm.controls.mobile_phone.touched)"
+     class="alert alert-danger">
+errors:
+  <div *ngIf="newPersonForm.controls.mobile_phone.errors.pattern">
+    must be mobile_phone
+  </div>
+
+</div>
+
+
+
 
                 <button type="submit" [disabled]="!newPersonForm.valid">
                     create
