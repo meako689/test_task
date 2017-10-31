@@ -5,7 +5,7 @@ import { Location }                 from '@angular/common';
 import { Person } from './person';
 import { Course } from './course';
 import { PersonService } from './person.service';
-import { PersonCourseService } from './person-course.service';
+import { CourseService } from './course.service';
 import 'rxjs/add/operator/switchMap';
 
 @Component({
@@ -20,7 +20,7 @@ export class PersonDetailComponent implements OnInit {
 
     constructor(
       private personService: PersonService,
-      private personCourseService: PersonCourseService,
+      private courseService: CourseService,
       private route: ActivatedRoute,
       private location: Location
     ) {
@@ -32,7 +32,7 @@ export class PersonDetailComponent implements OnInit {
         .subscribe((person) =>{
             
             this.person = person;
-            this.personCourseService.getPersonCourses(this.person.id).then((data) => {
+            this.courseService.getPersonCourses(this.person.id).then((data) => {
                 this.courses = data;
                 if (this.courses.available.length){
                     this.courseToAdd = this.courses.available[0];
@@ -53,13 +53,13 @@ export class PersonDetailComponent implements OnInit {
         this.courses.available.push(course);
         this.courses.applied = this.courses.applied.filter(c=> c!== course);
 
-        this.personCourseService.action('unsubscribe', this.person.id, course.id);
+        this.courseService.action('unsubscribe', this.person.id, course.id);
 
     }
     subscribe(course: Course): void{
         this.courses.applied.push(course);
         this.courses.available = this.courses.available.filter(c=> c!== course);
-        this.personCourseService.action('subscribe', this.person.id, course.id);
+        this.courseService.action('subscribe', this.person.id, course.id);
 
         if (this.courses.available.length){
             this.courseToAdd = this.courses.available[0];

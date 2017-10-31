@@ -8,12 +8,19 @@ import { Course } from './course';
 
 
 @Injectable()
-export class PersonCourseService {
+export class CourseService {
 
     private peopleCourseUrl = 'http://192.168.192.168:8000/person_courses/'; 
+    private coursesUrl = 'http://192.168.192.168:8000/courses/'; 
     private headers = new Headers({'Content-Type': 'application/json'});
     constructor(private http: Http) { }
 
+    getCourses(): Promise<Course[]>{
+      return this.http.get(this.coursesUrl)
+                 .toPromise()
+                 .then(response => response.json().data as Course[])
+                 .catch(this.handleError);
+    }
     getPersonCourses(personId:number): Promise<any> {
         var url = this.peopleCourseUrl+personId;
 

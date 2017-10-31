@@ -8,9 +8,10 @@ import { AppComponent } from './app.component';
 import { PersonDetailComponent } from './person-detail.component';
 import { PersonAddComponent } from './person-add.component';
 import { PeopleComponent } from './people.component';
+import { CoursesComponent } from './courses.component';
 import { AppRoutingModule } from './app.routing';
 import { PersonService } from './person.service';
-import { PersonCourseService } from './person-course.service';
+import { CourseService } from './course.service';
 import { ActiveBlockedPipe } from './active-blocked.pipe';
 
 
@@ -22,6 +23,7 @@ import { ActiveBlockedPipe } from './active-blocked.pipe';
       PersonDetailComponent,
       PersonAddComponent,
       PeopleComponent,
+      CoursesComponent,
       ActiveBlockedPipe
   ],
   imports: [
@@ -30,7 +32,7 @@ import { ActiveBlockedPipe } from './active-blocked.pipe';
     HttpModule,
     AppRoutingModule
   ],
-  providers: [PersonService, PersonCourseService],
+  providers: [PersonService, CourseService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

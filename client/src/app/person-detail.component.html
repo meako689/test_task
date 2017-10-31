@@ -23,7 +23,7 @@
         <select [(ngModel)]="courseToAdd">
           <option *ngFor="let course of courses.available" [ngValue]="course">{{course.name}}</option>
         </select>
-            <button class="add"
+            <button class="add" *ngIf="courses.applied.length < 5"
               (click)="subscribe(courseToAdd); $event.stopPropagation()">add</button>
         </div>
 
