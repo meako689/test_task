@@ -28,7 +28,7 @@ export class PersonAddComponent {
     ) {
         this.newPersonForm = this.formBuilder.group({
           'name': ['', [Validators.required,
-                      Validators.pattern(/[a-zA-Z ]+/)]],
+                      Validators.pattern(/^[a-zA-Zа-яА-ЯієїІЄЇґҐ ]+$/u)]],
           'email': ['', [Validators.email]],
           'status': [false, [Validators.required]],
           'phone': ['', [Validators.pattern(/^\+\d{12}$/)]],
