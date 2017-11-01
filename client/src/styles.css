@@ -21,6 +21,21 @@ body{
     cursor: pointer;
 }
 
+button.very-rounded{
+    border:none;
+    color:white;
+    height:40px;
+    cursor: pointer;
+    padding:0px 12px;
+    text-shadow: 2px 2px 2px rgba(30,30,30, 0.5);
+    box-shadow: 1px 1px 1px rgba(30,30,30, 0.3);
+
+}
+button.very-rounded:disabled{
+    background-color:#cacaca;
+}
+
+
 .roundbtn:focus,.roundbtn:active {
    outline: none !important;
 }
@@ -80,9 +95,33 @@ body{
     border-radius:40px;
     box-shadow: 1px 1px 1px rgba(30,30,30, 0.1);
 }
+.very-rounded:focus,.very-rounded:active {
+    border-color:#aaaaaa;
+}
+
+.very-rounded.ng-touched.ng-invalid{
+    color:red;
+}
+
+select.very-rounded{
+    -webkit-appearance:none;
+}
+.select-wrapper{
+    position:relative;
+}
+.select-wrapper::after{
+    font:normal normal normal 16px/1 Octicons;
+    content:"\f0a3";
+    position: absolute;
+    right:8px;
+    top:12px;
+    color:#666666;
+    display:block;
+}
 
 .table {
     background:white;
+    margin-bottom:0;
 }
 .thead-dark{
     color:white;
@@ -120,3 +159,18 @@ section.pages-section{
 .octicon-chevron-left ,.octicon-chevron-right{
     margin-left:2px;
 }
+
+.form-section label{
+    margin-left:10px;
+    font-weight:bold;
+    font-size:14px;
+}
+.form-section label.required::before{
+    content:"*";
+    color:red;
+}
+.form-section .error-message{
+    color:red;
+    margin-top:35px;
+}
+

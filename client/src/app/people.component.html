@@ -59,7 +59,7 @@
 </section>
 <section class="row pages-section text-center">
 
-  <div class="mx-auto">
+  <div *ngIf="!searchBox.value" class="mx-auto">
     
     <button class="roundbtn rounded-circle roundbtn-small kindagreen-bg"
             (click)="goToPage(currentPage-1)" [disabled]="currentPage === pages[0]">

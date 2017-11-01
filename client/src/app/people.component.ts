@@ -21,7 +21,7 @@ export class PeopleComponent implements OnInit {
   total = 0;
   pages: number [] = [];
   currentPage :number = 1;
-  showPerPageOptions = [15, 10, 20];
+  showPerPageOptions = [ 10,15,20];
   showPerPage :number;
 
     constructor(private personService: PersonService,

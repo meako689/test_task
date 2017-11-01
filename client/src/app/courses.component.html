@@ -1,9 +1,23 @@
 
-<h2> Courses</h2>
+<section class="row controls-section">
+  <div class="text-center mx-auto">
+    <h2> COURSES</h2>
+  </div>
+</section>
 
-<ul>
-  <li *ngFor='let course of courses'>{{course.name}}
-    | {{course.code}}
-  </li>
-</ul>
-
+<section class="row table-section">
+  <table class="table table-hover">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Code</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor='let course of courses'>
+        <td>{{course.name}}</td>
+        <td>{{course.code}} </td>
+      </tr>
+    </tbody>
+  </table>
+</section>

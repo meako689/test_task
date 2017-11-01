@@ -1,74 +1,138 @@
-<h2>Fuck</h2>
-     <form [formGroup]="newPersonForm" #form="ngForm" (ngSubmit)="add(newPersonForm.value)">
-                    <input type="text"
-                           placeholder="name"
-                           formControlName="name"/>
-
-
-
-<div *ngIf="newPersonForm.controls.name.invalid && (newPersonForm.controls.name.dirty || newPersonForm.controls.name.touched)"
-     class="alert alert-danger">
-errors:
-  <div *ngIf="newPersonForm.controls.name.errors.required">
-    Name is required.
+<section class="row controls-section">
+  <div class="col-1">
+    <button class="rounded-circle roundbtn kindared-bg"
+      (click)="goBack()">
+        <span class="octicon octicon-chevron-left"></span>  
+    </button>
   </div>
-
-</div>
-
-                    <input type="email"
-                           placeholder="email"
-                           formControlName="email">
-
-<div *ngIf="newPersonForm.controls.email.invalid && (newPersonForm.controls.email.dirty || newPersonForm.controls.email.touched)"
-     class="alert alert-danger">
-errors:
-  <div *ngIf="newPersonForm.controls.email.errors.email">
-    must be email
+  <div class="col-11 text-center">
+    <h2>CREATE USER</h2>
   </div>
+</section>
 
-</div>
 
+<section class="form-section">
 
-                    <select formControlName="status">
+     <form [formGroup]="newPersonForm" #form="ngForm"
+           (ngSubmit)="add(newPersonForm.value)"
+           class=""
+           >
+             
+       <div class="form-group row">
+         <!--offsets don't work in bootstrap beta :(-->
+         <div class="col-md-4"></div> 
+
+         <div class="col-md-5">
+           <label class="required" for="name">Name:</label>
+
+            <input type="text"
+                   placeholder="name"
+                   class="form-control very-rounded"
+                   formControlName="name"/>
+         </div>
+
+         <div *ngIf="newPersonForm.controls.name.invalid && (newPersonForm.controls.name.dirty || newPersonForm.controls.name.touched)"
+               class="col-md-3 form-text error-message">
+               <span *ngIf="newPersonForm.controls.name.errors.required">
+                  Name is required.
+               </span>
+               <span *ngIf="newPersonForm.controls.name.errors.pattern">
+                 Only letters accepted.
+               </span>
+        </div>
+       </div>
+
+       <div class="form-group row">
+         <!--offsets don't work in bootstrap beta :(-->
+         <div class="col-md-4"></div> 
+
+         <div class="col-md-5">
+           <label class="required" for="email">Email:</label>
+
+            <input type="email"
+                   placeholder="email"
+                   class="form-control very-rounded"
+                   formControlName="email"/>
+         </div>
+
+         <div *ngIf="newPersonForm.controls.email.invalid && (newPersonForm.controls.email.dirty || newPersonForm.controls.email.touched)"
+               class="col-md-3 form-text error-message">
+               <span *ngIf="newPersonForm.controls.email.errors.email">
+                  Please enter valid email address.
+               </span>
+        </div>
+       </div>
+
+       <div class="form-group row">
+         <!--offsets don't work in bootstrap beta :(-->
+         <div class="col-md-4"></div> 
+
+         <div class="col-md-5">
+           <label for="status">Status:</label>
+                 <div class="select-wrapper">
+                   
+                    <select class="form-control very-rounded"
+                      formControlName="status">
                       <option [ngValue]=true>active</option>
                       <option [ngValue]=false>inactive</option>
                     </select>
-                    <input type="text"
-                           placeholder="phone"
-                           formControlName="phone"/>
+                 </div>
+         </div>
 
+       </div>
+       <div class="form-group row">
+         <!--offsets don't work in bootstrap beta :(-->
+         <div class="col-md-4"></div> 
 
-<div *ngIf="newPersonForm.controls.phone.invalid && (newPersonForm.controls.phone.dirty || newPersonForm.controls.phone.touched)"
-     class="alert alert-danger">
-errors:
-  <div *ngIf="newPersonForm.controls.phone.errors.pattern">
-    must be phone
-  </div>
+         <div class="col-md-5">
+           <label for="phone">Phone:</label>
 
-</div>
+            <input type="text"
+                   placeholder="phone"
+                   class="form-control very-rounded"
+                   formControlName="phone"/>
+         </div>
 
+         <div *ngIf="newPersonForm.controls.phone.invalid && (newPersonForm.controls.phone.dirty || newPersonForm.controls.phone.touched)"
+               class="col-md-3 form-text error-message">
+               <span *ngIf="newPersonForm.controls.phone.errors.pattern">
+                 Please enter phone number in +380123456789 format.
+               </span>
+        </div>
+       </div>
 
-                    <input type="text"
-                           placeholder="mobile_phone"
-                           formControlName="mobile_phone"/>
+       <div class="form-group row">
+         <!--offsets don't work in bootstrap beta :(-->
+         <div class="col-md-4"></div> 
 
+         <div class="col-md-5">
+           <label for="mobile_phone">Mobile phone:</label>
 
-<div *ngIf="newPersonForm.controls.mobile_phone.invalid && (newPersonForm.controls.mobile_phone.dirty || newPersonForm.controls.mobile_phone.touched)"
-     class="alert alert-danger">
-errors:
-  <div *ngIf="newPersonForm.controls.mobile_phone.errors.pattern">
-    must be mobile_phone
-  </div>
+            <input type="text"
+                   placeholder="Mobile"
+                   class="form-control very-rounded"
+                   formControlName="mobile_phone"/>
+         </div>
 
-</div>
+         <div *ngIf="newPersonForm.controls.mobile_phone.invalid && (newPersonForm.controls.mobile_phone.dirty || newPersonForm.controls.mobile_phone.touched)"
+               class="col-md-3 form-text error-message">
+               <span *ngIf="newPersonForm.controls.mobile_phone.errors.pattern">
+                 Please enter phone number in +380123456789 format.
+               </span>
+        </div>
+       </div>
+       <div class="form-group row">
+         <div class="col-md-4"></div> 
 
-
-
-
-                <button type="submit" [disabled]="!newPersonForm.valid">
-                    create
-                </button>
+         <div class="col-md-5 text-right">
+              <button 
+                class="ml-auto very-rounded kindagreen-bg"
+                type="submit" [disabled]="!newPersonForm.valid">
+                  Create
+              </button>
+         </div>
+       </div>
 
             </form>
-<button (click)="goBack()">Back</button>
+</section>
 
