@@ -1,3 +1,7 @@
+<div *ngFor="let alert of alerts">
+  <alert class="very-rounded" [type]="alert.type" [dismissOnTimeout]="alert.timeout">{{ alert.msg }}</alert>
+</div>
+
 <section class="row controls-section">
   <div class="col-1">
     <button class="rounded-circle roundbtn kindared-bg"
@@ -26,7 +30,6 @@
 
             <input type="text"
                    placeholder="name"
-                   disabled="true"
                    class="form-control very-rounded"
                    formControlName="name"/>
          </div>

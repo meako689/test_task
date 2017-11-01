@@ -191,3 +191,14 @@ section.pages-section{
     font-weight:bold;
     font-size:14px;
 }
+
+.alert{
+    border-radius:50px;
+    border-width:2px;
+    font-weight:bold;
+    color:#64bf7c;
+    border-color:#64bf7c;
+    position:absolute;
+    right:50px;
+    background:white;
+}

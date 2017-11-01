@@ -33,7 +33,6 @@ export class PeopleComponent implements OnInit {
     ngOnInit(): void {
       this.getPeople();
       this.getTotal();
-       console.log('init');
     }
 
 
@@ -67,8 +66,6 @@ export class PeopleComponent implements OnInit {
     countPages(): void{
         this.pages = [];
 
-        console.log(this.showPerPage);
-        console.log(this.total);
 
         var countPages = Math.trunc(this.total / this.showPerPage);
         if (this.total % this.showPerPage){
@@ -79,8 +76,6 @@ export class PeopleComponent implements OnInit {
           this.pages.push(i);
         }
 
-        console.log(countPages);
-        console.log(this.pages);
     }
 
 

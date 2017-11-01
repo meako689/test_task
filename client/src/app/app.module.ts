@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpModule }    from '@angular/http';
 
+import { AlertModule } from 'ngx-bootstrap';
 
 import { AppComponent } from './app.component';
 import { PersonDetailComponent } from './person-detail.component';
@@ -13,6 +14,8 @@ import { AppRoutingModule } from './app.routing';
 import { PersonService } from './person.service';
 import { CourseService } from './course.service';
 import { ActiveBlockedPipe } from './active-blocked.pipe';
+
+
 
 
 
@@ -30,7 +33,8 @@ import { ActiveBlockedPipe } from './active-blocked.pipe';
     BrowserModule,
     FormsModule, ReactiveFormsModule,
     HttpModule,
-    AppRoutingModule
+    AppRoutingModule,
+    AlertModule.forRoot()
   ],
   providers: [PersonService, CourseService],
   bootstrap: [AppComponent]

@@ -17,12 +17,13 @@ import 'rxjs/add/operator/switchMap';
 })
 export class PersonAddComponent {
     newPersonForm: FormGroup;
+      public alerts: any[] = [];
 
     constructor(
       private personService: PersonService,
       private route: ActivatedRoute,
       private location: Location,
-      private formBuilder: FormBuilder
+      private formBuilder: FormBuilder,
       
     ) {
         this.newPersonForm = this.formBuilder.group({
@@ -41,6 +42,11 @@ export class PersonAddComponent {
 
     add(newPerson: Person): void {
       this.personService.create(newPerson)
-        .then(() => this.goBack()); //TODO show message, wait 3 sec
+        .then(() => {
+            this.alerts.push({type:'success', msg:'User Created Successfully', timeout:3000});
+            setTimeout(() => {  
+                this.goBack(); 
+            }, 3000);
+        });
     }
 }
