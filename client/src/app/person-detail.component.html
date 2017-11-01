@@ -1,43 +1,183 @@
-<div *ngIf="person">
-      <h2>{{person.name}} details!</h2>
-      <div><label>id: </label>{{person.id}}</div>
-      <div>
-        <label>name: </label>
-        <input id="name" name="name" [(ngModel)]="person.name" placeholder="name"/>
-        <input type="email" [(ngModel)]="person.email" placeholder="email"/>
+<section class="row controls-section">
+  <div class="col-1">
+    <button class="rounded-circle roundbtn kindared-bg"
+      (click)="goBack()">
+        <span class="octicon octicon-chevron-left"></span>  
+    </button>
+  </div>
+  <div class="col-11 text-center">
+    <h2>EDIT USER</h2>
+  </div>
+</section>
 
-        <select [(ngModel)]="person.status">
-          <option [ngValue]=true>active</option>
-          <option [ngValue]=false>inactive</option>
-        </select>
+<section  *ngIf="person" class="form-section">
 
-        <input [(ngModel)]="person.phone" placeholder="phone"/>
-        <input [(ngModel)]="person.mobile_phone" placeholder="mobile_phone"/>
-      </div>
+     <form [formGroup]="editPersonForm" #form="ngForm"
+           (ngSubmit)="save()"
+           class=""
+           >
+             
+       <div class="form-group row">
+         <!--offsets don't work in bootstrap beta :(-->
+         <div class="col-md-4"></div> 
 
-      <hr />
-      <div *ngIf="courses" >
-        <div *ngIf="courses.available.length" >
-          
-        course to add:
-        <select [(ngModel)]="courseToAdd">
-          <option *ngFor="let course of courses.available" [ngValue]="course">{{course.name}}</option>
-        </select>
-            <button class="add" *ngIf="courses.applied.length < 5"
-              (click)="subscribe(courseToAdd); $event.stopPropagation()">add</button>
+         <div class="col-md-5">
+           <label class="required" for="name">Name:</label>
+
+            <input type="text"
+                   placeholder="name"
+                   disabled="true"
+                   class="form-control very-rounded"
+                   formControlName="name"/>
+         </div>
+
+         <div *ngIf="editPersonForm.controls.name.invalid && (editPersonForm.controls.name.dirty || editPersonForm.controls.name.touched)"
+               class="col-md-3 form-text error-message">
+               <span *ngIf="editPersonForm.controls.name.errors.required">
+                  Name is required.
+               </span>
+               <span *ngIf="editPersonForm.controls.name.errors.pattern">
+                 Only letters accepted.
+               </span>
         </div>
+       </div>
 
-        <ul *ngIf="courses.applied.length" >
-          <li *ngFor="let course of courses.applied">{{course.name}}
-            <button class="delete"
-              (click)="unsubscribe(course); $event.stopPropagation()">x</button>
-          
-          </li>
-        </ul>
+       <div class="form-group row">
+         <!--offsets don't work in bootstrap beta :(-->
+         <div class="col-md-4"></div> 
+
+         <div class="col-md-5">
+           <label class="required" for="email">Email:</label>
+
+            <input type="email"
+                   placeholder="email"
+                   class="form-control very-rounded"
+                   formControlName="email"/>
+         </div>
+
+         <div *ngIf="editPersonForm.controls.email.invalid && (editPersonForm.controls.email.dirty || editPersonForm.controls.email.touched)"
+               class="col-md-3 form-text error-message">
+               <span *ngIf="editPersonForm.controls.email.errors.email">
+                  Please enter valid email address.
+               </span>
+        </div>
+       </div>
+
+       <div class="form-group row">
+         <!--offsets don't work in bootstrap beta :(-->
+         <div class="col-md-4"></div> 
+
+         <div class="col-md-5">
+           <label for="status">Status:</label>
+                 <div class="select-wrapper">
+                   
+                    <select class="form-control very-rounded"
+                      formControlName="status">
+                      <option [ngValue]=true>active</option>
+                      <option [ngValue]=false>inactive</option>
+                    </select>
+                 </div>
+         </div>
+
+       </div>
+       <div class="form-group row">
+         <!--offsets don't work in bootstrap beta :(-->
+         <div class="col-md-4"></div> 
+
+         <div class="col-md-5">
+           <label for="phone">Phone:</label>
+
+            <input type="text"
+                   placeholder="phone"
+                   class="form-control very-rounded"
+                   formControlName="phone"/>
+         </div>
+
+         <div *ngIf="editPersonForm.controls.phone.invalid && (editPersonForm.controls.phone.dirty || editPersonForm.controls.phone.touched)"
+               class="col-md-3 form-text error-message">
+               <span *ngIf="editPersonForm.controls.phone.errors.pattern">
+                 Please enter phone number in +380123456789 format.
+               </span>
+        </div>
+       </div>
+
+       <div class="form-group row">
+         <!--offsets don't work in bootstrap beta :(-->
+         <div class="col-md-4"></div> 
+
+         <div class="col-md-5">
+           <label for="mobile_phone">Mobile phone:</label>
+
+            <input type="text"
+                   placeholder="Mobile"
+                   class="form-control very-rounded"
+                   formControlName="mobile_phone"/>
+         </div>
+
+         <div *ngIf="editPersonForm.controls.mobile_phone.invalid && (editPersonForm.controls.mobile_phone.dirty || editPersonForm.controls.mobile_phone.touched)"
+               class="col-md-3 form-text error-message">
+               <span *ngIf="editPersonForm.controls.mobile_phone.errors.pattern">
+                 Please enter phone number in +380123456789 format.
+               </span>
+        </div>
+       </div>
+      <div *ngIf="courses">
+  
+       <div class="form-group row">
+         <div class="col-md-4"></div> 
+
+         <div   class="col-md-4 ">
+           <label for="courses">Courses:</label>
+           <div *ngIf="courses.available.length" >
+             <div class="select-wrapper">
+             <select  [(ngModel)]="courseToAdd"
+                      [ngModelOptions]="{standalone: true}"
+                class="form-control very-rounded">
+                <option *ngFor="let course of courses.available" [ngValue]="course">{{course.name}}</option>
+             </select>
+             </div>
+           </div>
+         </div>
+         <div *ngIf="courses.available.length" class="col-md-1 text-right">
+            <b  class="rounded-circle roundbtn kindagreen-bg subscribe-course" *ngIf="courses.applied.length < 5"
+                (click)="subscribe(courseToAdd); $event.stopPropagation()">
+                <span class="octicon octicon-plus"></span>
+            </b>
+         </div>
+
+       </div>
+
+       <div class="form-group row" *ngIf="courses.applied.length">
+         <div class="col-md-4"></div> 
+
+         <div class="col-md-5 ">
+            <div *ngFor="let course of courses.applied" class="row course-list-item">
+              <div class="col-10">
+                {{course.name}}
+              </div>
+              <div class="col-2 text-right">
+                <b (click)="unsubscribe(course); $event.stopPropagation()">
+                  <span class="octicon octicon-circle-slash"></span>
+                </b>
+              </div>
+            
+            </div>
+         </div>
       </div>
 
-      <hr />
-<button (click)="goBack()">Back</button>
-<button (click)="save()">Save</button>
+</div>
 
-    </div>
+       <div class="form-group row">
+         <div class="col-md-4"></div> 
+
+         <div class="col-md-5 text-right">
+              <button 
+                class="ml-auto very-rounded kindagreen-bg"
+                type="submit" [disabled]="!editPersonForm.valid">
+                  Save
+              </button>
+         </div>
+       </div>
+    </form>
+</section>
+

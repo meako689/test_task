@@ -103,8 +103,14 @@ button.very-rounded:disabled{
     color:red;
 }
 
+input.very-rounded:disabled{
+    background:#575761;
+    color:white;
+}
+
 select.very-rounded{
     -webkit-appearance:none;
+    min-width:60px;
 }
 .select-wrapper{
     position:relative;
@@ -174,3 +180,14 @@ section.pages-section{
     margin-top:35px;
 }
 
+.subscribe-course{
+    margin-top:30px;
+    text-align:right;
+}
+.course-list-item{
+    border-bottom:1px solid #cacaca;
+    margin:5px 0px;
+    padding:5px 0px;
+    font-weight:bold;
+    font-size:14px;
+}

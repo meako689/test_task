@@ -19,9 +19,11 @@
   </div>
 
   <div class="ml-auto">
+     <div class="select-wrapper">
     <select class="form-control very-rounded" (change)="changePerPage()"[(ngModel)]="showPerPage">
-      <option *ngFor="let c of showPerPageOptions" [ngValue]="c">{{c}}</option>
+      <option *ngFor="let c of showPerPageOptions" [ngValue]="c">{{c}} </option>
     </select>
+     </div>
   </div>
 
 </section>

@@ -4,5 +4,6 @@ export class Person {
   email: string;
   phone: string;
   mobile_phone: string;
+  status: boolean;
 }
 
