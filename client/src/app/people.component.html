@@ -18,7 +18,7 @@
     <h2>USERS</h2>
   </div>
 
-  <div class="ml-auto">
+  <div class="ml-auto" *ngIf="!searchBox.value">
      <div class="select-wrapper">
     <select class="form-control very-rounded" (change)="changePerPage()"[(ngModel)]="showPerPage">
       <option *ngFor="let c of showPerPageOptions" [ngValue]="c">{{c}} </option>
