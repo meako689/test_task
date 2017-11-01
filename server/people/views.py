@@ -27,11 +27,17 @@ class CoursesViewSet(viewsets.ViewSet):
         count = self.manager.count()
         return Response({'total': count, 'data': serializer.data})
 
+    def create(self, request):
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.create(serializer.validated_data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
 
 class PersonViewSet(viewsets.ViewSet):
     """Viewset for browsing and CRUD'ing people """
     serializer_class = PersonSerializer
-    manager = StoredModelManager(Person)
+    manager = ModelManager(Person)
 
     def list(self, request):
         limit = request.query_params.get('limit')
