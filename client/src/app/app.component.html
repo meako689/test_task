@@ -1,12 +1,22 @@
-<div style="text-align:center">
-  <h1>
-    Welcome to {{title}}!
-  </h1>
-</div>
-<h2>Here are some links to help you start: </h2>
-  <nav>
-    <a routerLink="/people" routerLinkActive="active">List</a>
-    <a routerLink="/people/add" routerLinkActive="active">Add</a>
-    <a routerLink="/courses" routerLinkActive="active">courses</a>
-  </nav>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+      <div class="container">
+        
+      <a class="navbar-brand" href="#">Test Task</a>
+        <ul class="navbar-nav ml-auto ">
+          <li class="nav-item" routerLinkActive="active">
+            <a class="nav-link" routerLink="/people" >Users</a>
+          </li>
+          <li class="nav-item" routerLinkActive="active">
+            <a class="nav-link" routerLink="/courses" >Courses</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+
+
+
+<div class="container">
+
   <router-outlet></router-outlet>
+</div>

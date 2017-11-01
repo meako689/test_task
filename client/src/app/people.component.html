@@ -1,29 +1,79 @@
 
-<h2> Total people {{total}}</h2>
-  <input #searchBox id="search-box" (keyup.enter)="onSearch(searchBox.value)"  />
-  <button class="search"
-    (click)="onSearch(searchBox.value); ">search</button>
+<section class="row controls-section">
+  
 
-<select (change)="changePerPage()"[(ngModel)]="showPerPage">
-  <option *ngFor="let c of showPerPageOptions" [ngValue]="c">{{c}}</option>
-</select>
+  <div class="col-4">
+    <a routerLink="/people/add" class="rounded-circle roundbtn kindared-bg" >
+      <span class="octicon octicon-plus"></span>
+    </a>
+    <button class="search rounded-circle roundbtn kindagreen-bg"
+      (click)="onSearch(searchBox.value); ">
+      <span class="octicon octicon-search"></span>
+    </button>
 
-<ul>
-  <li *ngFor='let person of people'><a [routerLink]="['/person', person.id]">{{person.name}}</a>
-    | {{person.email}}
-    | {{person.status | activeBlocked}}
-  <button class="delete"
-    (click)="delete(person); $event.stopPropagation()">x</button>
-  </li>
-</ul>
-pages:
+    <input class="form-control searchinput" #searchBox id="search-box" (keyup.enter)="onSearch(searchBox.value)"  />
+  </div>
 
+  <div class="col-5 text-center">
+    <h2>USERS</h2>
+  </div>
 
+  <div class="ml-auto">
+    <select class="form-control very-rounded" (change)="changePerPage()"[(ngModel)]="showPerPage">
+      <option *ngFor="let c of showPerPageOptions" [ngValue]="c">{{c}}</option>
+    </select>
+  </div>
 
-<button (click)="goToPage(currentPage-1)" [disabled]="currentPage === pages[0]">
-  prev</button>
-<button (click)="goToPage(page)"  [class.selected]="page === currentPage" *ngFor='let page of pages'>
-  {{page}}</button>
-<button (click)="goToPage(currentPage+1)" [disabled]="currentPage === pages[pages.length-1]">
-  next</button>
+</section>
 
+<section class="row table-section">
+
+  <table class="table table-hover">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Email</th>
+        <th scope="col">Status</th>
+        <th scope="col" class="text-right">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor='let person of people'>
+      <td>{{person.name}}</td>
+      <td>{{person.email}}</td>
+      <td [ngClass]="person.status ? 'kindagreen' : 'kindared'">{{person.status | activeBlocked}}</td>
+
+      <td class="text-right">
+        <a class="rounded-circle roundbtn kindagreen-bg roundbtn-small" [routerLink]="['/person', person.id]">
+          <span class="octicon octicon-pencil"></span>
+        </a>
+
+          <button class="rounded-circle roundbtn kindared-bg roundbtn-small"
+              (click)="delete(person); $event.stopPropagation()">
+            <span class="octicon octicon-trashcan"></span>
+          </button>
+      </td>
+    </tr>  
+    </tbody>
+  </table>
+</section>
+<section class="row pages-section text-center">
+
+  <div class="mx-auto">
+    
+    <button class="roundbtn rounded-circle roundbtn-small kindagreen-bg"
+            (click)="goToPage(currentPage-1)" [disabled]="currentPage === pages[0]">
+      <span class="octicon octicon-chevron-left"></span>  
+    </button>
+    <button class="roundbtn rounded-circle roundbtn-small navbtn"
+            (click)="goToPage(page)"  [class.kindagreen]="page === currentPage" *ngFor='let page of pages'>
+      {{page}}
+    </button>
+    <button class="roundbtn rounded-circle roundbtn-small kindagreen-bg"
+            (click)="goToPage(currentPage+1)" [disabled]="currentPage === pages[pages.length-1]">
+      <span class="octicon octicon-chevron-right"></span>  
+    </button>
+
+  </div>
+  
+</section>

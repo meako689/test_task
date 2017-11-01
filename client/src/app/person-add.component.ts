@@ -26,15 +26,13 @@ export class PersonAddComponent {
       
     ) {
     this.newPersonForm = this.formBuilder.group({
-        'name': ['', [Validators.required,
-                      Validators.pattern(/[a-zA-Z ]+/)]],
+      'name': ['', [Validators.required,
+                  Validators.pattern(/[a-zA-Z ]+/)]],
       'email': ['', [Validators.email]],
       'status': [false, [Validators.required]],
       'phone': ['', [Validators.pattern(/^\+\d{12}$/)]],
       'mobile_phone': ['', [Validators.pattern(/^\+\d{12}$/)]]
     });
-       console.log('HELLO THERE');
-        console.log(this.newPersonForm);
     }
 
     goBack(): void {
@@ -42,7 +40,6 @@ export class PersonAddComponent {
     }
 
     add(newPerson: Person): void {
-        console.log(newPerson);
       this.personService.create(newPerson)
         .then(() => this.goBack()); //TODO show message, wait 3 sec
     }
