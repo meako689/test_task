@@ -10,7 +10,7 @@ import { Person } from './person';
 @Injectable()
 export class PersonService {
 
-    private peopleUrl = 'http://192.168.192.168:8000/people/'; 
+    private peopleUrl = '/api/people/'; 
     private headers = new Headers({'Content-Type': 'application/json'});
     constructor(private http: Http) { }
 

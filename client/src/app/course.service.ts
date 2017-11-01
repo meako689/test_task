@@ -10,8 +10,8 @@ import { Course } from './course';
 @Injectable()
 export class CourseService {
 
-    private peopleCourseUrl = 'http://192.168.192.168:8000/person_courses/'; 
-    private coursesUrl = 'http://192.168.192.168:8000/courses/'; 
+    private peopleCourseUrl = '/api/person_courses/'; 
+    private coursesUrl = '/api/courses/'; 
     private headers = new Headers({'Content-Type': 'application/json'});
     constructor(private http: Http) { }
 

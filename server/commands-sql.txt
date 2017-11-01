@@ -1,0 +1,9 @@
+create user vagrant with password 'vagrant';
+
+drop database users; create database users; grant all privileges on database users to vagrant;
+\c users
+
+
+
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO vagrant;
+GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO vagrant;
