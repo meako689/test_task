@@ -1,10 +1,13 @@
 import psycopg2
+
 from django.conf import settings
+
 
 CONNECTION = psycopg2.connect("dbname='{dbname}' user='{dbuser}' host='localhost' password='{dbpass}'".format(
                               dbname=settings.DATABASES['default']['NAME'],
                               dbuser=settings.DATABASES['default']['USER'],
                               dbpass=settings.DATABASES['default']['PASSWORD']))
+CONNECTION.autocommit = True
 
 class Model(object):
     """Base class for db instances"""

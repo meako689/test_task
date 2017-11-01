@@ -1,7 +1,7 @@
 CREATE TABLE person(
  id serial PRIMARY KEY,
  name VARCHAR (50) NOT NULL,
- email VARCHAR (355) UNIQUE NOT NULL,
+ email VARCHAR (355) NOT NULL,
  status BOOLEAN NOT NULL,
  phone VARCHAR (13) NOT NULL,
  mobile_phone VARCHAR (13) NOT NULL
@@ -11,16 +11,16 @@ CREATE TABLE courses(
  id serial PRIMARY KEY,
  name VARCHAR (50) NOT NULL,
  code VARCHAR (10) NOT NULL
-)
+);
 
 CREATE TABLE person_courses(
  id serial PRIMARY KEY,
  person_id INTEGER,
  course_id INTEGER
-)
+);
 
 
-# list people
+-- # list people
 CREATE OR REPLACE FUNCTION list_person() RETURNS SETOF person AS
 $BODY$
 BEGIN
@@ -30,7 +30,7 @@ $BODY$
 LANGUAGE 'plpgsql';
 
 
-#search people
+-- #search people
 CREATE OR REPLACE FUNCTION search_person(p_query VARCHAR) RETURNS SETOF person AS
 $BODY$
 BEGIN
@@ -56,19 +56,19 @@ $BODY$
 LANGUAGE 'plpgsql';
 
 
-#get person
+-- #get person
 CREATE OR REPLACE FUNCTION get_person(p_id INTEGER) RETURNS SETOF person AS
 $BODY$
 BEGIN
 RETURN QUERY 
-        SELECT * FROM person WHERE id = p_id;
+SELECT * FROM person WHERE id = p_id;
 END; 
 $BODY$
 LANGUAGE 'plpgsql';
 
 
 
-#update
+-- #update
 CREATE OR REPLACE FUNCTION update_person(
     p_id INTEGER,
     p_name  VARCHAR,
@@ -87,7 +87,7 @@ LANGUAGE 'plpgsql';
 
 
 
-# count people
+-- # count people
 CREATE OR REPLACE FUNCTION count_person() RETURNS TABLE (count BIGINT) AS
 $BODY$
 BEGIN
@@ -99,7 +99,7 @@ LANGUAGE 'plpgsql';
 
 
 
-#delete person
+-- #delete person
 CREATE OR REPLACE FUNCTION delete_person(p_id INTEGER) RETURNS VOID AS
 $BODY$
 BEGIN
