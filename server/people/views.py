@@ -37,7 +37,7 @@ class CoursesViewSet(viewsets.ViewSet):
 class PersonViewSet(viewsets.ViewSet):
     """Viewset for browsing and CRUD'ing people """
     serializer_class = PersonSerializer
-    manager = ModelManager(Person)
+    manager = StoredModelManager(Person)
 
     def list(self, request):
         limit = request.query_params.get('limit')
